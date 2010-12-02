@@ -6,11 +6,11 @@ Gem::Specification.new do |s|
   s.name        = "cache-money"
   s.version     = Cache::Money::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
+  s.authors     = ["nkallen"]
+  s.email       = []
   s.homepage    = "http://rubygems.org/gems/cache-money"
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = ""
+  s.description = ""
 
   s.rubyforge_project = "cache-money"
 
