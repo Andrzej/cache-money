@@ -46,7 +46,7 @@ For `config/initializers/cache_money.rb`
             @remote_cache.get_multi args
           end
         end
-    
+
         def delete(key, *options)
           @remote_cache.delete(key)
         end

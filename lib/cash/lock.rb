@@ -55,7 +55,7 @@ module Cash
     rescue
       @cache.logger.warn("#{$!}") if @cache.respond_to?(:logger) && @cache.logger.respond_to?(:warn)
     end
-    
+
     def host_pid
       "#{Socket.gethostname} #{Process.pid}"
     end

@@ -13,7 +13,7 @@ else
   require 'cache_money'
 
   memcache_config[:logger] = Rails.logger
-  memcache_servers = 
+  memcache_servers =
     case memcache_config[:servers].class.to_s
       when "String"; memcache_config[:servers].gsub(' ', '').split(',')
       when "Array"; memcache_config[:servers]

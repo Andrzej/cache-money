@@ -25,7 +25,7 @@ module Cash
             Story.fetch([]).should == {}
           end
         end
-        
+
         describe 'when there is a total cache miss' do
           it 'yields the keys to the block' do
             Story.fetch(["yabba", "dabba"]) { |*missing_ids| ["doo", "doo"] }.should == {
@@ -89,7 +89,7 @@ module Cash
             Story.add("count", 1) { "yield me" }.should == "yield me"
           end
         end
-        
+
         describe 'when no block is given' do
           it 'does not error' do
             Story.set("count", 1)
@@ -108,7 +108,7 @@ module Cash
 
     describe '#set' do
     end
-    
+
     describe '#incr' do
       describe 'when there is a cache hit' do
         before do
@@ -172,7 +172,7 @@ module Cash
         Story.get("bobo").should == nil
       end
     end
-    
+
     describe '#cache_key' do
       it 'uses the version number' do
         Story.version 1

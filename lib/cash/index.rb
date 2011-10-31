@@ -65,7 +65,7 @@ module Cash
       def window
         limit && limit + buffer
       end
-      
+
       def order_column
         options[:order_column] || 'id'
       end
