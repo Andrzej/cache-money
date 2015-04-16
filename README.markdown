@@ -25,7 +25,7 @@ Queries with joins/includes are unsupported at this time. In general, any query 
 Queries with limits and offsets are supported. In general, however, if you are running queries with limits and offsets you are dealing with large datasets. It's more performant to place a limit on the size of the `Cache Money` index like so:
 
     DirectMessage.index :user_id, :limit => 1000
-    
+
 In this example, only queries whose limit and offset are less than 1000 will use the cache.
 
 ### Multiple indices are supported ###
@@ -53,17 +53,17 @@ The order declaration will ensure that the index is kept in the correctly sorted
 
  * `Message.find(:all, :conditions => {:sender_id => ...}, :order => 'id DESC')`.
 
-Order clauses can be specified in many formats ("`messages`.id DESC", "`messages`.`id` DESC", and so forth), but ordering MUST be on the primary key column. 
+Order clauses can be specified in many formats ("`messages`.id DESC", "`messages`.`id` DESC", and so forth), but ordering MUST be on the primary key column.
 
     class Message < ActiveRecord::Base
       index :sender_id, :order => :asc
     end
-    
+
 will support queries like:
 
  * `Message.find(:all, :conditions => {:sender_id => ...}, :order => 'id ASC')`
  * `Message.find(:all, :conditions => {:sender_id => ...})`
- 
+
 Note that ascending order is implicit in index declarations (i.e., not specifying an order is the same as ascending). This is also true of queries (order is not nondeterministic as in MySQL).
 
 ### Window indices ###
@@ -86,7 +86,7 @@ It is particularly in conjunction with window indices that the `:order` attribut
       version 7
       index ...
     end
-    
+
 You can increment the version number as you migrate your schema. Be careful how you deploy changes like this as during deployment independent mongrels may be using different versions of your code. Indices can be corrupted if you do not plan accordingly.
 
 ### Transactions ###
@@ -120,7 +120,7 @@ Nested transactions are fully supported, with partial rollback and (apparent) pa
 For your unit tests, it is faster to use a Memcached mock than the real deal. Just place this in your initializer for your test environment:
 
     $memcache = Cash::Mock.new
-    
+
 ### Locks ###
 
 In most cases locks are unnecessary; the transactional Memcached client will take care locks for you automatically and guarantees that no deadlocks can occur. But for very complex distributed transactions, shared locks are necessary.
@@ -128,7 +128,7 @@ In most cases locks are unnecessary; the transactional Memcached client will tak
     $lock.synchronize('lock_name') do
       $memcache.set("key", "value")
     end
-    
+
 ### Local Cache ###
 
 Sometimes your code will request the same cache key twice in one request. You can avoid a round trip to the Memcached server by using a local, per-request cache. Add this to your initializer:
@@ -144,7 +144,7 @@ Sometimes your code will request the same cache key twice in one request. You ca
 
     % gem sources -a http://gems.github.com
     % sudo gem install ngmoco-cache-money
-    
+
 #### Step 2: Configure MemCached.
 
 Place a YAML file in `config/memcached.yml` with contents like:
@@ -157,7 +157,7 @@ Place a YAML file in `config/memcached.yml` with contents like:
       servers: localhost:11211
       cache_money: true
 
-    development: 
+    development:
        ....
 
 #### Step 3: `config/environment.rb` ####
@@ -173,7 +173,7 @@ Queries like `User.find(1)` will use the cache automatically. For more complex q
     class User < ActiveRecord::Base
       index :name
     end
-    
+
 For queries on multiple attributes, combination indexes are necessary. For example, `User.find(:all, :conditions => {:name => 'bob', :age => 26})`
 
     class User < ActiveRecord::Base
@@ -189,7 +189,7 @@ In that case, you can omit the following from your `config/initializers/cache_mo
 	class ActiveRecord::Base
 	  is_cached :repository => $cache
 	end
-		
+
 After that is removed, you can simple put this at the top of your models you wish to cache:
 
 	is_cached :repository => $cache

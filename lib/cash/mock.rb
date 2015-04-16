@@ -4,7 +4,7 @@ module Cash
 
     class CacheEntry
       attr_reader :value
-      
+
       def self.default_ttl
         1_000_000
       end
@@ -12,51 +12,51 @@ module Cash
       def self.now
         Time.now
       end
-      
+
       def initialize(value, raw, ttl)
         if raw
           @value = value.to_s
         else
           @value = Marshal.dump(value)
         end
-        
+
         if ttl.zero?
           @ttl = self.class.default_ttl
         else
           @ttl = ttl
         end
-        
+
         @expires_at = self.class.now + @ttl
       end
-      
-      
+
+
       def expired?
         self.class.now > @expires_at
       end
-      
+
       def increment(amount = 1)
         @value = (@value.to_i + amount).to_s
       end
-      
+
       def decrement(amount = 1)
         @value = (@value.to_i - amount).to_s
       end
-      
+
       def unmarshal
         Marshal.load(@value)
       end
-      
+
       def to_i
         @value.to_i
       end
     end
-    
+
     attr_accessor :logging
-    
+
     def initialize
       @logging = false
     end
-    
+
     def get_multi(keys)
       slice(*keys).collect { |k,v| [k, v.unmarshal] }.to_hash_without_nils
     end
@@ -73,7 +73,7 @@ module Cash
         log('> END')
         return nil
       end
-      
+
       log("> sending key #{key}")
       log('> END')
       if raw
@@ -82,7 +82,7 @@ module Cash
         self[key].unmarshal
       end
     end
-    
+
     def delete(key, options = {})
       log "< delete #{key}"
       if self.has_unexpired_key?(key)
@@ -140,15 +140,15 @@ module Cash
     def has_unexpired_key?(key)
       self.has_key?(key) && !self[key].expired?
     end
-    
+
     def log(message)
       return unless logging
       logger.debug(message)
     end
-    
+
     def logger
       @logger ||= ActiveSupport::BufferedLogger.new(Rails.root.join('log/cash_mock.log'))
     end
-    
+
   end
 end

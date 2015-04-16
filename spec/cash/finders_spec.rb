@@ -107,7 +107,7 @@ module Cash
                       .should == story
                   end
                 end
-                
+
                 describe 'when the attributes must be coerced to sql values' do
                   it 'does not use the database' do
                     story1 = Story.create!(:published => true)
@@ -342,14 +342,14 @@ module Cash
           before(:each) do
             Story.find_by_title(@story.title)  # populates cache for title with [@story.id]
           end
-          
+
           it 'populates the cache' do
             Story.fetch("title/#{@story.title}").should == [@story.id]
           end
-          
+
           it 'populates the cache when finding by non-primary-key attribute' do
             Story.find_by_title(@story.title)  # populates cache for id with record
-            
+
             mock(Story.connection).execute.never  # should hit cache only
             Story.find_by_title(@story.title).id.should == @story.id
           end

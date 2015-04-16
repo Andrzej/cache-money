@@ -34,7 +34,7 @@ class ActiveRecord::Base
   end
 
   def <=>(other)
-    if self.id == other.id then 
+    if self.id == other.id then
       0
     else
       self.id < other.id ? -1 : 1

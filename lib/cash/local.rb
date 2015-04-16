@@ -12,7 +12,7 @@ module Cash
     ensure
       @remote_cache = original_cache
     end
-    
+
     def autoload_missing_constants
       yield if block_given?
     rescue ArgumentError, MemCache::MemCacheError => error
@@ -25,7 +25,7 @@ module Cash
     end
 
     private
-    
+
     def method_missing(method, *args, &block)
       autoload_missing_constants do
         @remote_cache.send(method, *args, &block)
@@ -68,7 +68,7 @@ module Cash
     end
 
     private
-    
+
     def method_missing(method, *args, &block)
       @remote_cache.send(method, *args, &block)
     end

@@ -124,7 +124,7 @@ module Cash
               Story.find(:first, :conditions => []).should == story
             end
           end
-        
+
           describe "#find(:first, :conditions => '...')" do
             it "coerces ruby values to the appropriate database values" do
               story1 = Story.create! :title => 'a story', :published => true
@@ -193,7 +193,7 @@ module Cash
             end
           end
           lambda do
-            AfterFindStory.create!(:title => 'a story') 
+            AfterFindStory.create!(:title => 'a story')
           end.should_not raise_error(ActiveRecord::MissingAttributeError)
         end
       end
@@ -207,7 +207,7 @@ module Cash
         end
       end
     end
-    
+
     describe 'loading' do
       it "should be able to create a record for an ar subclass that was loaded before cache money" do
         $debug = true

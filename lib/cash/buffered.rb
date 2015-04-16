@@ -95,9 +95,9 @@ module Cash
     def buffer_command(command)
       @commands << command
     end
-    
+
     private
-    
+
     def method_missing(method, *args, &block)
       @cache.send(method, *args, &block)
     end

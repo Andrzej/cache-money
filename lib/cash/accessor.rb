@@ -12,7 +12,7 @@ module Cash
         case keys
         when Array
           return {} if keys.empty?
-          
+
           keys = keys.collect { |key| cache_key(key) }
           hits = repository.get_multi(*keys)
           if (missed_keys = keys - hits.keys).any?

@@ -29,7 +29,7 @@ class MemcachedWrapper < ::Memcached
       else
         opts = symbolize_keys(opts)
       end
-      
+
       servers = Array(
         args.any? ? args.unshift : opts.delete(:servers)
       ).flatten.compact
@@ -39,7 +39,7 @@ class MemcachedWrapper < ::Memcached
       @logger = opts[:logger]
       @debug  = opts[:debug]
 
-      super(servers, opts)      
+      super(servers, opts)
   end
 
   def symbolize_keys(opts)
@@ -54,7 +54,7 @@ class MemcachedWrapper < ::Memcached
     end
     opts
   end
-  
+
   def namespace
     options[:prefix_key]
   end
@@ -85,8 +85,8 @@ class MemcachedWrapper < ::Memcached
     log_error($!) if logger
     not_stored
   end
-  
-  # Wraps Memcached#get so that it doesn't raise. This has the side-effect of preventing you from 
+
+  # Wraps Memcached#get so that it doesn't raise. This has the side-effect of preventing you from
   # storing <tt>nil</tt> values.
   def get(key, raw=false)
     logger.debug("Memcached get: #{key.inspect}") if logger && @debug
@@ -135,7 +135,7 @@ class MemcachedWrapper < ::Memcached
     end
     log_error($!) if logger
   end
-  
+
   def get_multi(*keys)
     keys.flatten!
     logger.debug("Memcached get_multi: #{keys.inspect}") if logger && @debug
@@ -200,7 +200,7 @@ class MemcachedWrapper < ::Memcached
   rescue Memcached::Error
     log_error($!) if logger
   end
-  
+
   def incr(*args)
     super
   rescue Memcached::NotFound
@@ -224,22 +224,22 @@ class MemcachedWrapper < ::Memcached
   alias :flush_all :flush
   alias :compare_and_swap :cas
   alias :"[]" :get
-  alias :"[]=" :set    
+  alias :"[]=" :set
 
 private
 
   def stored
     "STORED\r\n"
   end
-  
+
   def deleted
     "DELETED\r\n"
   end
-  
+
   def not_stored
     "NOT_STORED\r\n"
   end
-  
+
   def not_found
     "NOT_FOUND\r\n"
   end
@@ -248,7 +248,7 @@ private
     #logger.error("#{err}: \n\t#{err.backtrace.join("\n\t")}") if logger
     logger.error("Memcached ERROR, #{err.class}: #{err}") if logger
   end
-  
+
 end
 ####### they have MemCache installed (don't need the wrapper)
 elsif defined? MemCache

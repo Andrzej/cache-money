@@ -4,7 +4,7 @@ module Cash
       active_record.cache_config = Cash::Config::Config.new(active_record, options)
       indices.each { |i| active_record.index i.attributes, i.options }
     end
-    
+
     def self.included(a_module)
       a_module.module_eval do
         extend ClassMethods
@@ -18,7 +18,7 @@ module Cash
           def cache_config
             @cache_config ? @cache_config : superclass.cache_config
           end
-          
+
           delegate :repository, :indices, :to => :cache_config
           alias_method_chain :inherited, :cache_config
         end
